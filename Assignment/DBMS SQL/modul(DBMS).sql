@@ -1,4 +1,4 @@
-- Q1 - Create a new database named school_db and a table called students with the following columns: student_id, student_name, age, class, and address.
+-- Q1 - Create a new database named school_db and a table called students with the following columns: student_id, student_name, age, class, and address.
 create schema school_db;
 CREATE DATABASE SCHOOL_DB;
 

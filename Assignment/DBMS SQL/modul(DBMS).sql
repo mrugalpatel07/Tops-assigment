@@ -122,6 +122,34 @@ grant select on courses to user1;
 revoke select on courses from user1;
 grant select on courses to user2; 
 
+
+-- Q21 - Insert a few rows into the courses table and use COMMIT to save the changes.
+
+insert into courses values (5,'COMPUTER_Engineering','4 Year'),
+(6,'NETWORKING_Engineering','4 Year');
+select * from courses;
+commit;
+
+-- Q22 - Insert additional rows, then use ROLLBACK to undo the last insert operation.
+
+insert into courses values (7,'AI/ML','4 Year'),
+(8,'FULL STACK','4 Year');
+
+select * from courses;
+
+rollback;
+
+-- Q23 - Create a SAVEPOINT before updating the courses table, and use it to roll back specific changes.
+
+update courses set course_duration = '3 Yares' where course_id = 2;
+savepoint s1;
+update courses set course_duration = '4 Yares' where course_id = 3;
+savepoint s2;
+update courses set course_duration = '4 Yares' where course_id = 5;
+select * from courses;
+
+rollback to savepoint s1;
+
 -- Q24 - Create two tables: departments and employees. Perform an INNER JOIN to display employees along with their respective departments.
 
 CREATE DATABASE EMPLOYEES_DB;
@@ -169,32 +197,6 @@ SELECT * FROM EMPLOYEES;
 SELECT EMPLOYEES.EMPLOYEE_ID,EMPLOYEES.EMPLOYEE_NAME,DEPARTMENTS.DEPARTMENT_ID,DEPARTMENTS.DEPARTMENT_NAME
 FROM DEPARTMENTS INNER JOIN EMPLOYEES ON EMPLOYEES.DEPARTMENT_ID = DEPARTMENTS.DEPARTMENT_ID;
 
--- Q21 - Insert a few rows into the courses table and use COMMIT to save the changes.
-
-insert into courses values (5,'COMPUTER_Engineering','4 Year'),
-(6,'NETWORKING_Engineering','4 Year');
-select * from courses;
-commit;
-
--- Q22 - Insert additional rows, then use ROLLBACK to undo the last insert operation.
-
-insert into courses values (7,'AI/ML','4 Year'),
-(8,'FULL STACK','4 Year');
-
-select * from courses;
-
-rollback;
-
--- Q23 - Create a SAVEPOINT before updating the courses table, and use it to roll back specific changes.
-
-update courses set course_duration = '3 Yares' where course_id = 2;
-savepoint s1;
-update courses set course_duration = '4 Yares' where course_id = 3;
-savepoint s2;
-update courses set course_duration = '4 Yares' where course_id = 5;
-select * from courses;
-
-rollback to savepoint s1;
 
 
 -- Q25 - Use a LEFT JOIN to show all departments, even those without employees.
@@ -245,7 +247,6 @@ SELECT * FROM EMPLOYEE_DEPARTMENT;
 
 -- Q32 - Create a trigger to automatically log changes to the employees table when a new employee is added.
 
--- Q33 - Create a trigger to update the last_modified timestamp whenever an employee record is updated.
 
 CREATE TABLE UPDATE_EMPLOYEES
 (
